@@ -40,9 +40,11 @@ malaysia-open-data-pipeline/
 │   │
 │   ├── inspect_bronze_fuel.py
 │   ├── load_gold_to_sqlite.py
+│   ├── load_gold_to_postgres.py
 │   ├── query_fuel_database.py
 │   └── run_pipeline.py
 │
+├── docker-compose.yml
 ├── .gitignore
 ├── requirements.txt
 └── README.md
@@ -56,15 +58,21 @@ flowchart TD
     B --> C[Bronze Layer: Raw CSV]
     C --> D[Inspect Raw Data]
     D --> E[Silver Layer: Cleaned and Validated CSV]
-    E --> F[Gold Layer: Analytics-Ready CSV]
+    E --> Q[Data Quality Checks]
+    Q --> F[Gold Layer: Analytics-Ready CSV]
     F --> G[SQLite Database]
+    F --> P[PostgreSQL Database]
     G --> H[SQL Queries]
     G --> I[Streamlit Dashboard]
+    P --> H
     J[Pipeline Runner] --> B
     J --> E
+    J --> Q
     J --> F
     J --> G
+    J --> P
     J --> K[Pipeline Logs]
+    L[Docker Compose] --> P
 ```
 
 ## Core Features
@@ -72,12 +80,12 @@ flowchart TD
 - Extracts real Malaysian fuel price data from the data.gov.my API
 - Stores raw source data in a bronze layer
 - Cleans and validates actual fuel price records in a silver layer
+- Generates a data quality report for row count, duplicates, missing values, and negative price checks
 - Builds gold analytics tables for monthly averages, latest prices, and weekly changes
-- Loads gold tables into a SQLite database
+- Loads gold analytics tables into both SQLite and PostgreSQL
+- Uses Docker Compose to run PostgreSQL locally
+- Demonstrates SQL database loading using Pandas, SQLAlchemy, and psycopg2
 - Provides sample SQL queries for analysis
 - Runs the full ETL process using one pipeline command
 - Saves pipeline execution logs
-- Visualizes results using a Streamlit dashboard
-- Generates a data quality report for row count, duplicates, missing values, and negative price checks
-- Loads the data quality report into SQLite for monitoring
-- Displays data quality status inside the Streamlit dashboard
+- Visualizes fuel price trends and data quality status using a Streamlit dashboard
