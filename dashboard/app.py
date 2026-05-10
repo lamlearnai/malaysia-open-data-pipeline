@@ -32,6 +32,14 @@ def load_latest_price() -> pd.DataFrame:
 
     return run_query(query)
 
+def load_quality_report() -> pd.DataFrame:
+    query = """
+    SELECT check_name, status, value, expected, checked_at
+    FROM gold_fuel_data_quality_report;
+    """
+
+    return run_query(query)
+
 def main():
     st.set_page_config(
         page_title="Malaysia Fuel Price Dashboard",
@@ -43,6 +51,7 @@ def main():
 
     monthly_df = load_monthly_average()
     latest_df = load_latest_price()
+    quality_df = load_quality_report()
 
     if monthly_df.empty:
         st.error("No monthly fuel price data found.")
@@ -60,6 +69,25 @@ def main():
     col4.metric("Diesel East Malaysia", f"RM {latest_record['diesel_eastmsia']:.2f}")
 
     st.caption(f"Latest record date: {latest_record['date']}")
+
+    st.subheader("Data Quality Status")
+
+    total_checks = len(quality_df)
+    passed_checks = len(quality_df[quality_df["status"] == "PASS"])
+    failed_checks = len(quality_df[quality_df["status"] == "FAIL"])
+
+    col1, col2, col3 = st.columns(3)
+
+    col1.metric("Total Checks", total_checks)
+    col2.metric("Passed Checks", passed_checks)
+    col3.metric("Failed Checks", failed_checks)
+
+    if failed_checks == 0:
+        st.success("All data quality checks passed.")
+    else:
+        st.error("Some data quality checks failed.")
+
+    st.dataframe(quality_df, use_container_width=True)
 
     st.subheader("Monthly Average Fuel Price Trend")
 
