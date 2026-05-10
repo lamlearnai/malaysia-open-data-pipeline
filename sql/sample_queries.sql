@@ -81,3 +81,19 @@ UNION ALL
 
 SELECT 'gold_fuel_weekly_change' AS table_name, COUNT(*) AS total_rows
 FROM gold_fuel_weekly_change;
+
+-- 11. View latest data quality report
+SELECT check_name, status, value, expected, checked_at
+FROM gold_fuel_data_quality_report;
+
+
+-- 12. Count passed and failed data quality checks
+SELECT status, COUNT(*) AS total_checks
+FROM gold_fuel_data_quality_report
+GROUP BY status;
+
+
+-- 13. View failed data quality checks only
+SELECT check_name, value, expected, checked_at
+FROM gold_fuel_data_quality_report
+WHERE status = 'FAIL';
