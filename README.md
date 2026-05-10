@@ -31,6 +31,9 @@ malaysia-open-data-pipeline/
 │   ├── extract/
 │   │   └── extract_fuel_prices.py
 │   │
+│   ├── quality/
+│   │   └── check_fuel_data_quality.py
+│   │
 │   ├── transform/
 │   │   ├── clean_fuel_prices.py
 │   │   └── build_gold_fuel_prices.py
@@ -75,3 +78,6 @@ flowchart TD
 - Runs the full ETL process using one pipeline command
 - Saves pipeline execution logs
 - Visualizes results using a Streamlit dashboard
+- Generates a data quality report for row count, duplicates, missing values, and negative price checks
+- Loads the data quality report into SQLite for monitoring
+- Displays data quality status inside the Streamlit dashboard

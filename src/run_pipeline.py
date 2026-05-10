@@ -28,6 +28,7 @@ logging.basicConfig(
 PIPELINE_STEPS = [
     "src/extract/extract_fuel_prices.py",
     "src/transform/clean_fuel_prices.py",
+    "src/quality/check_fuel_data_quality.py",
     "src/transform/build_gold_fuel_prices.py",
     "src/load_gold_to_sqlite.py",
 ]

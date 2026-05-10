@@ -15,6 +15,7 @@ GOLD_FILES = {
     "gold_fuel_monthly_average": "gold_fuel_monthly_average_*.csv",
     "gold_fuel_latest_price": "gold_fuel_latest_price_*.csv",
     "gold_fuel_weekly_change": "gold_fuel_weekly_change_*.csv",
+    "gold_fuel_data_quality_report": "gold_fuel_data_quality_report_*.csv",
 }
 
 def get_latest_file(pattern: str) -> Path:
