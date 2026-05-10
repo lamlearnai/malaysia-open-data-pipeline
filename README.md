@@ -24,6 +24,9 @@ malaysia-open-data-pipeline/
 │   ├── dashboard.png
 │   └── pipeline_success.png
 │
+├── sql/
+│   └── sample_queries.sql
+│
 ├── src/
 │   ├── extract/
 │   │   └── extract_fuel_prices.py
