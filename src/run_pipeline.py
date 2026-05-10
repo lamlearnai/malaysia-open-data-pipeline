@@ -31,6 +31,7 @@ PIPELINE_STEPS = [
     "src/quality/check_fuel_data_quality.py",
     "src/transform/build_gold_fuel_prices.py",
     "src/load_gold_to_sqlite.py",
+    "src/load_gold_to_postgres.py",
 ]
 
 
